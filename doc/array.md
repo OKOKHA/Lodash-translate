@@ -164,7 +164,6 @@ _.fill(['a','s','d','f'],2)
 ```
 
 ### _.findIndex(array, [predicate=_.identity], [thisArg])
-
 这个方法就像_.find，但是期望返回的是第一个元素的索引而不是元素的值。
 
 如果创建的predicate是一个属性名，并且是_.property类型，那么返回的是被给定的元素的属性值。
@@ -220,7 +219,6 @@ _.findLastIndex(users, 'active');
 ```
 
 ### _.fist(array)
-
 得到数组的第一个元素。
 
 #### 别名
@@ -239,7 +237,6 @@ _.first([1, 2, 3, 4, 5, 6, 7])
 ```
 
 ### _.flatten(array, [isDeep])
-
 抹平嵌套的数组。如果isDeep为true，则递归地抹平嵌套数组。否则，即isDeep为空或者false时，只抹平第一层。
 
 #### 参数
@@ -484,11 +481,11 @@ Uses a binary search to determine the lowest index at which value should be inse
 #### 参数
 *array (Array): 排序数组检查.
 
-*value (*): 要插入的数值.
+*value (): 要插入的数值.
 
 *[iteratee=_.identity] (Function|Object|string): 对数组的每个函数进行调用.
 
-*[thisArg] (*): iteratee中的值.
+*[thisArg] (): iteratee中的值.
 
 #### 返回
 返回被插入数组的的值在新数组中的索引
@@ -501,16 +498,17 @@ _.sortedIndex([1,2,3,4,5,6],2);
 
 ### _.sortedLastIndex(array, value, [iteratee=_.identity], [thisArg])
 
+
 这种方法类似g_.sortedIndex，期望返回这个数值在新排序数组中的最后一个数的索引。
 
 #### 参数
 *array (Array): 排序数组检查.
 
-*value (*): 要插入的数值.
+*value (): 要插入的数值.
 
 *[iteratee=_.identity] (Function|Object|string): 对数组的每个函数进行调用.
 
-*[thisArg] (*): iteratee中的值.
+*[thisArg] (): iteratee中的值.
 
 #### 返回
 返回插入数在新数组中的索引
@@ -572,7 +570,7 @@ _.takeRight([1,2,3,4,5,6],4);
 
 *[iteratee=_.identity] (Function|Object|string): 对数组的每个函数进行调用.
 
-*[thisArg] (*): predicate中的值.
+*[thisArg] (): predicate中的值.
 
 #### 返回
 返回新数组
@@ -600,7 +598,7 @@ _.takeRightWhile([1,2,3,4,5,6],function(n){
 
 *[iteratee=_.identity] (Function|Object|string): 对数组的每个函数进行调用.
 
-*[thisArg] (*): predicate中的值.
+*[thisArg] (): predicate中的值.
 
 #### 返回
 返回新数组
@@ -649,7 +647,7 @@ _.unique
 
 *[iteratee] (Function|Object|string): 每个函数都调用.
 
-*[thisArg] (*): iteratee中的值.
+*[thisArg] (): iteratee中的值.
 
 #### 返回
 返回新的数组.
@@ -682,7 +680,7 @@ console.log(_.unzip(result));
 
 *[iteratee] (Function): 与重组数值结合的function.
 
-*[thisArg] (*):iteratee中的值.
+*[thisArg] ():iteratee中的值.
 
 #### 返回
 (Array): 返回重组数值之后的新数组.
@@ -703,7 +701,7 @@ console.log(_.unzipWith(result, _.add));
 #### 参数
 *array (Array): 待过滤的数组.
 
-*[values] (…*): 要过滤掉的数.
+*[values] (): 要过滤掉的数.
 
 #### 返回
 返回过滤之后的新数组.
@@ -776,7 +774,7 @@ _.zipObject([['a',1],['s',2],['d',3]]);
 
 *[iteratee] (Function): 结合数值的function.
 
-*[thisArg] (*): iteratee中的数值.
+*[thisArg] (): iteratee中的数值.
 
 #### 返回
 返回重组后的数组.
