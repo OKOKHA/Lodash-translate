@@ -114,7 +114,7 @@ describe('Array  Mode', function () {
             //expect(result.length).to.equals(5)
         })
     })
-    describe.only('zipWith',function(){
+    describe('zipWith',function(){
         it('',function(){
             var result = _.zipWith([1,2,3,4],[5,6,7,8,],[1,3],_.add)
             console.log(result);
@@ -122,7 +122,24 @@ describe('Array  Mode', function () {
             //expect(result.length).to.equals(5)
         })
     })
+    describe.only('chain',function(){
+        it('',function(){
+            var users = [
+                { 'user': 'barney',  'age': 36 },
+                { 'user': 'fred',    'age': 40 },
+                { 'user': 'pebbles', 'age': 1 }
+            ];
 
+            var youngest = _.chain(users)
+                .sortBy('age')
+                .map(function(chr) {
+                    return chr.user + ' is ' + chr.age;
+                })
+                .first()
+                .value();
+            //expect(result.length).to.equals(5)
+        })
+    })
 
 
 
