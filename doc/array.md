@@ -28,7 +28,8 @@ _.chunk(['a','s','d','f','g','h','j'],3)
 #### 举例
 ```js
 _.compact([0,null,'a',1,'']
-// =>'[ 'a', 1 ]```
+// =>'[ 'a', 1 ]
+```
 
 ### _.difference(array, [values])
 新建一个数组，使得这个数组里的值没有另外提供的数组里面的值。
@@ -43,7 +44,8 @@ _.compact([0,null,'a',1,'']
 #### 举例
 ```js
 _.difference([1,3,5,7,9],[3,6,8])
-// =>[ 1, 5, 7, 9 ]```
+// =>[ 1, 5, 7, 9 ]
+```
 
 ### _.drop(array, [n=1])
 创建一个长度为n的数组，从数组第一个开始drop
@@ -59,7 +61,8 @@ _.difference([1,3,5,7,9],[3,6,8])
 #### 举例
 ```js
 _.drop(['a','s','d','f','g','h','j','k','l'],8)
-// =>[ 'l' ]```
+// =>[ 'l' ]
+```
 
 ### _.dropRight(array, [n=1])
 创建一个数组，从数组的末尾开始丢弃元素
@@ -75,7 +78,8 @@ _.drop(['a','s','d','f','g','h','j','k','l'],8)
 #### 举例
 ```js
 _.dropRight([1,2,3,4,5,6,7,8,9],5)'
-// =>[ 1, 2, 3, 4 ]```
+// =>[ 1, 2, 3, 4 ]
+```
 
 ### _.dropRightWhile(array, [predicate=_.identity], [thisArg])
 创建一个数组，从数组末尾开始丢弃元素,直到predicate返回错值。predicate与thisArg一定有关并且调用三个参数:(value,,index,array)
@@ -101,7 +105,8 @@ _.dropRight([1,2,3,4,5,6,7,8,9],5)'
 var result1 = _.dropRightWhile([1,2,3,4,5,6],function(n){
     return n>5;
 })
-// =>[ 1, 2, 3, 4, 5 ]```
+// =>[ 1, 2, 3, 4, 5 ]
+```
 
 
 ### _.dropWhile(array, [predicate=_.identity], [thisArg])
@@ -128,7 +133,8 @@ var result1 = _.dropRightWhile([1,2,3,4,5,6],function(n){
 var result1 = _.dropWhile([1,2,3,4,5,6],function(n){
     return n<3;
 })
-// =>[ 3, 4, 5, 6 ] ```
+// =>[ 3, 4, 5, 6 ]
+```
 
 
 ### _.fill(array, value, [start=0], [end=array.length])
@@ -154,9 +160,11 @@ var result1 = _.dropWhile([1,2,3,4,5,6],function(n){
 _.fill([1,2,3,4,5,6],'2',1,4)
 // =>[ 1, '2', '2', '2', 5, 6 ]
 _.fill(['a','s','d','f'],2)
-// =>[ 2, 2, 2, 2 ]```
+// =>[ 2, 2, 2, 2 ]
+```
 
 ### _.findIndex(array, [predicate=_.identity], [thisArg])
+
 这个方法就像_.find，但是期望返回的是第一个元素的索引而不是元素的值。
 
 如果创建的predicate是一个属性名，并且是_.property类型，那么返回的是被给定的元素的属性值。
@@ -208,9 +216,11 @@ var users = [
 ];
 
 _.findLastIndex(users, 'active');
-// =>1```
+// =>1
+```
 
 ### _.fist(array)
+
 得到数组的第一个元素。
 
 #### 别名
@@ -225,9 +235,11 @@ _.head
 #### 举例
 ```js
 _.first([1, 2, 3, 4, 5, 6, 7])
-// =>1```
+// =>1
+```
 
 ### _.flatten(array, [isDeep])
+
 抹平嵌套的数组。如果isDeep为true，则递归地抹平嵌套数组。否则，即isDeep为空或者false时，只抹平第一层。
 
 #### 参数
@@ -241,7 +253,8 @@ _.first([1, 2, 3, 4, 5, 6, 7])
 _.flatten([1,2,[3,[4,5]]],true)
 // =>[ 1, 2, 3, 4, 5 ]
 _.flatten([1,2,[3,[4,5]]])
-// =>[ 1, 2, 3, [ 4, 5 ] ]```
+// =>[ 1, 2, 3, [ 4, 5 ] ]
+```
 
 ### _.flattenDeep(array)
 
@@ -256,7 +269,8 @@ _.flatten([1,2,[3,[4,5]]])
 #### 举例
 ```js
 _.flattenDeep([1,2,[3,[4,5]]]);
-// =>[ 1, 2, 3, 4, 5 ]```
+// =>[ 1, 2, 3, 4, 5 ]
+```
 
 ### _.indexOf(array, value, [fromIndex=0])
 
@@ -274,7 +288,8 @@ _.flattenDeep([1,2,[3,[4,5]]]);
 _.indexOf([1,2,3,3,2,1],2,2);
 // =>4
 _.indexOf([1,2,3,3,2,1],2,-1);
-// =>-1```
+// =>-1
+```
 
 ### _.initial(array)
 
@@ -289,7 +304,8 @@ _.indexOf([1,2,3,3,2,1],2,-1);
 #### 举例
 ```js
 _.initial([ 1, 2, 3, 3, 2 , 1 ])
-// =>[ 1, 2, 3, 3, 2 ]```
+// =>[ 1, 2, 3, 3, 2 ]
+```
 
 ### _.intersection([arrays])
 
@@ -304,7 +320,8 @@ _.initial([ 1, 2, 3, 3, 2 , 1 ])
 #### 举例
 ```js
 _.intersection([1,2,3],[1,2,4],[1,3,5]);
-// =>[ 1 ]```
+// =>[ 1 ]
+```
 
 ### _.last(array)
 
@@ -319,7 +336,8 @@ _.intersection([1,2,3],[1,2,4],[1,3,5]);
 #### 举例
 ```js
 _.last([1,2,3,4,5]);
-// =>5```
+// =>5
+```
 
 ### _.lastIndexOf(array, value, [fromIndex=array.length-1])
 
@@ -357,7 +375,8 @@ _.last([1,2,3,4,5]);
 ```js
 var list= [1,2,3,3,2,1]
 _.pull(list,1,2);
-// => [ 3, 3 ]```
+// => [ 3, 3 ]
+```
 
 ### _.pullAt(array, [indexes])
 
@@ -377,7 +396,8 @@ array (Array): 要简化的数组
 #### 举例
 ```js
 _.pullAt([1,2,3,3,2,1],0,3);
-// =>[ 1, 3 ]```
+// =>[ 1, 3 ]
+```
 
 ### _.remove(array, [predicate=_.identity], [thisArg])
 
@@ -405,7 +425,8 @@ _.pullAt([1,2,3,3,2,1],0,3);
 var result1 = _.remove([1,2,3,4,5,6],function(n){
     return n % 2 == 0;
 })
-// =>[ 2, 4, 6 ]```
+// =>[ 2, 4, 6 ]
+```
 
 ### _.rest(array)
 
@@ -423,7 +444,8 @@ _.tail
 #### 举例
 ```js
 _.rest([1,2,3,4,5,6])
-// =>[ 2, 3, 4, 5, 6 ]```
+// =>[ 2, 3, 4, 5, 6 ]
+```
 
 ### _.slice(array, [start=0], [end=array.length])
 
@@ -445,7 +467,8 @@ This method is used instead of Array#slice to support node lists in IE < 9 and t
 #### 举例
 ```js
 _.slice([1,2,3,4,5,6],1,4);
-// =>[ 2, 3, 4 ]```
+// =>[ 2, 3, 4 ]
+```
 
 ### _.sortedIndex(array, value, [iteratee=_.identity], [thisArg])
 
@@ -473,10 +496,10 @@ Uses a binary search to determine the lowest index at which value should be inse
 #### 举例
 ```js
 _.sortedIndex([1,2,3,4,5,6],2);
-// =>1```
+// =>1
+```
 
 ### _.sortedLastIndex(array, value, [iteratee=_.identity], [thisArg])
-
 
 这种方法类似g_.sortedIndex，期望返回这个数值在新排序数组中的最后一个数的索引。
 
@@ -495,7 +518,8 @@ _.sortedIndex([1,2,3,4,5,6],2);
 #### 举例
 ```js
 _.sortedLastIndex([1,2,2,4,5,6],2);
-// =>3```
+// =>3
+```
 
 ### _.take(array, [n=1])
 
@@ -512,7 +536,8 @@ _.sortedLastIndex([1,2,2,4,5,6],2);
 ### 举例
 ```js
 _.take([1,2,3,4,5,6],4);
-// =>[ 1, 2, 3, 4 ]```
+// =>[ 1, 2, 3, 4 ]
+```
 
 ### _.takeRight(array, [n=1])
 
@@ -529,7 +554,8 @@ _.take([1,2,3,4,5,6],4);
 #### 举例
 ```js
 _.takeRight([1,2,3,4,5,6],4);
-// =>[ 3, 4, 5, 6 ]```
+// =>[ 3, 4, 5, 6 ]
+```
 
 ### _.takeRightWhile(array, [predicate=_.identity], [thisArg])
 
@@ -556,7 +582,8 @@ _.takeRight([1,2,3,4,5,6],4);
 _.takeRightWhile([1,2,3,4,5,6],function(n){
     return n > 3;
 });
-// =>[ 4, 5, 6 ]```
+// =>[ 4, 5, 6 ]
+```
 
 ### _.takeWhile(array, [predicate=_.identity], [thisArg])
 
@@ -583,7 +610,8 @@ _.takeRightWhile([1,2,3,4,5,6],function(n){
 _.takeWhile([1, 2, 2, 4, 5, 6], function (n) {
     return n < 3;
 });
-// =>[ 1, 2, 2 ]```
+// =>[ 1, 2, 2 ]
+```
 
 ### _.union([arrays])
 
@@ -598,7 +626,8 @@ _.takeWhile([1, 2, 2, 4, 5, 6], function (n) {
 #### 举例
 ```js
 _.union([1,2,3],[1,2,4],[1,3,5]);
-// =>[ 1, 2, 3, 4, 5 ]```
+// =>[ 1, 2, 3, 4, 5 ]
+```
 
 ### _.uniq(array, [isSorted], [iteratee], [thisArg])
 
@@ -641,7 +670,8 @@ var result = _.zip([1,2,3],[1,2,4],[1,3,5])
 console.log(result);
 // =>[ [ 1, 1, 1 ], [ 2, 2, 3 ], [ 3, 4, 5 ] ]
 console.log(_.unzip(result));
-// =>[ [ 1, 2, 3 ], [ 1, 2, 4 ], [ 1, 3, 5 ] ]```
+// =>[ [ 1, 2, 3 ], [ 1, 2, 4 ], [ 1, 3, 5 ] ]
+```
 
 ### _.unzipWith(array, [iteratee], [thisArg])
 
@@ -663,7 +693,8 @@ var result = _.zip([1,2,3],[1,2,4],[1,3,5])
 console.log(result);
 // =>[ [ 1, 1, 1 ], [ 2, 2, 3 ], [ 3, 4, 5 ] ]
 console.log(_.unzipWith(result, _.add));
-// =>[ 6, 7, 9 ]```
+// =>[ 6, 7, 9 ]
+```
 
 ### _.without(array, [values])
 
@@ -680,7 +711,8 @@ console.log(_.unzipWith(result, _.add));
 #### 举例
 ```js
 _.without([1,2,3,1,3],1,2);
-// =>[ 3, 3 ]```
+// =>[ 3, 3 ]
+```
 
 ### _.xor([arrays])
 
@@ -695,7 +727,8 @@ _.without([1,2,3,1,3],1,2);
 #### 举例
 ```js
 _.xor([1,2,3,1,3],[1,2]);
-// =>[ 3 ]```
+// =>[ 3 ]
+```
 
 ### _.zip([arrays])
 
@@ -710,7 +743,8 @@ _.xor([1,2,3,1,3],[1,2]);
 #### 举例
 ```js
 _.zip([1,2,3,1,3],[1,2,3],[1,2,3,4]);
-// =>[ [ 1, 1, 1 ], [ 2, 2, 2 ], [ 3, 3, 3 ], [ 1, undefined, 4 ], [ 3, undefined, undefined ] ]```
+// =>[ [ 1, 1, 1 ], [ 2, 2, 2 ], [ 3, 3, 3 ], [ 1, undefined, 4 ], [ 3, undefined, undefined ] ]
+```
 
 ### _.zipObject(props, [values=[]])
 
@@ -730,7 +764,8 @@ _.object
 #### 举例
 ```js
 _.zipObject([['a',1],['s',2],['d',3]]);
-// =>{ a: 1, s: 2, d: 3 }```
+// =>{ a: 1, s: 2, d: 3 }
+```
 
 ### _.zipWith([arrays], [iteratee], [thisArg])
 
@@ -749,4 +784,5 @@ _.zipObject([['a',1],['s',2],['d',3]]);
 #### 举例
 ```js
 _.zipWith([1,2,3,4],[5,6,7,8,],[1,3],_.add);
-// =>[ 7, 11, 10, 12 ]```
+// =>[ 7, 11, 10, 12 ]
+```
