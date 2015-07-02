@@ -84,18 +84,18 @@ _.dropRight([1,2,3,4,5,6,7,8,9],5)'
 ### _.dropRightWhile(array, [predicate=_.identity], [thisArg])
 创建一个数组，从数组末尾开始丢弃元素,直到predicate返回错值。predicate与thisArg一定有关并且调用三个参数:(value,,index,array)
 
-如果创建的predicate是一个属性名，并且是_.property类型，那么返回的是被给定的元素的属性值。
+如果创建的predicate是一个对象，从右开始遍历array中的对象，并比predict的对象相比较，当结果是true的时候，drop掉array中的对象，遇到false时停止遍历，返回剩下的对象。
 
-如果thisArg也有值，则会对比predicate中的属性名的thisArg的值，drop。
+如果创建的predicate是一个属性名，从右开始遍历array中对应属性名的值，如果属性名的属性值为true时，drop掉，并且遇到false时停止遍历，返回剩下的对象构成的数组。
 
-如果predicate是一个object,array中的某一项的属性和object中的属性一致，drop array中的这个object。
+当predict是一个属性名，thisArg也有值时，从右边开始遍历属性名的属性值，与thisArg相比，当结果是true时，drop掉这个对象，遇到false时停止遍历，返回剩下的对象构成的数组。
 
 #### 参数
 *array(Array)：查询数组
 
 *'[predicate=_.identity]'(function/object/string):对数组的每个函数进行调用，可以是function/object/string值类型
 
-*[thisArg](*):predicate中的值
+*'[thisArg]'():predicate中的值
 
 #### 返回
 返回新的数组
@@ -106,17 +106,30 @@ var result1 = _.dropRightWhile([1,2,3,4,5,6],function(n){
     return n>5;
 })
 // =>[ 1, 2, 3, 4, 5 ]
+
+var aas = [{'aa': 'asd'},{'aa': false},{'aa': 'dfg'}]
+
+//当predict是一个对象时：
+_.dropRightWhile(aas, {'aa':'dfg'});
+// =>[ { aa: 'asd' }, { aa: false } ]
+
+//当predict是一个属性名时：
+_.dropRightWhile(aas, 'aa');
+// =>[ { aa: 'asd' }, { aa: false } ]
+
+//当predict是一个属性名，thisArg也有值时：
+_.dropRightWhile(aas, 'aa','dfg')；
+// =>[ { aa: 'asd' }, { aa: false } ]
 ```
 
-
 ### _.dropWhile(array, [predicate=_.identity], [thisArg])
-创建一个数组，从数组的第一个元素开始舍弃，直到predicate返回错值。predicate与thisArg一定有关，并且调用三个参数:(value,,index,array)
+创建一个数组，从数组左边开始丢弃元素,直到predicate返回错值。predicate与thisArg一定有关并且调用三个参数:(value,,index,array)
 
-如果创建的predicate是一个属性名，并且是_.property类型，那么返回的是被给定的元素的属性值。
+如果创建的predicate是一个对象，从左开始遍历array中的对象，并比predict的对象相比较，当结果是true的时候，drop掉array中的对象，继续遍历，遇到false时停止遍历，返回剩下的对象。
 
-如果thisArg也有值，则会对比predicate中的属性名的thisArg的值，drop。
+如果创建的predicate是一个属性名，从左开始遍历array中对应属性名的值，如果属性名的属性值为true时，drop掉，并且遇到false时停止遍历，返回剩下的对象构成的数组。
 
-如果predicate是一个object,array中的某一项的属性和object中的属性一致，drop array中的这个object。
+当predict是一个属性名，thisArg也有值时，从左边开始遍历属性名的属性值，与thisArg相比，当结果是true时，drop掉这个对象，遇到false时停止遍历，返回剩下的对象构成的数组。
 
 #### 参数
 *array(Array)：查询数组
@@ -134,8 +147,20 @@ var result1 = _.dropWhile([1,2,3,4,5,6],function(n){
     return n<3;
 })
 // =>[ 3, 4, 5, 6 ]
-```
 
+var aas = [{'aa': 'asd'},{'aa': 'dfg'},{'aa': false},{'aa': 'asd'}];
+//当predict是个object时：
+_.dropWhile(aas,  {'aa': 'asd'}；
+// =>[ { aa: 'dfg' }, { aa: false }, { aa: 'asd' } ]
+
+//当predict是个属性名时：
+_.dropWhile(aas,'aa')；
+// =>[ { aa: false }, { aa: 'asd' } ]
+
+//当predict是个属性名并且thisArg也有值时：
+_.dropWhile(aas,'aa','asd')；
+// =>[ { aa: 'dfg' }, { aa: false }, { aa: 'asd' } ]
+```
 
 ### _.fill(array, value, [start=0], [end=array.length])
 填充数组的元素，从开始到结束，但是不包含开始的位置
@@ -164,13 +189,13 @@ _.fill(['a','s','d','f'],2)
 ```
 
 ### _.findIndex(array, [predicate=_.identity], [thisArg])
-这个方法就像_.find，但是期望返回的是第一个元素的索引而不是元素的值。
+这个方法就像_.find，但是返回的是要找的元素的索引而不是元素的值。
 
-如果创建的predicate是一个属性名，并且是_.property类型，那么返回的是被给定的元素的属性值。
+如果创建的predicate是一个对象，从左开始遍历array中的对象，并比predict的对象相比较，当结果是true的时候，停止遍历，返回对应对象的索引。
 
-如果thisArg也有值，则会对比predicate中的属性名的thisArg的值，drop。
+如果创建的predicate是一个属性名，从左开始遍历array中对应属性名的值，当属性名的属性值为true时，返回对应的索引。
 
-如果predicate是一个object,array中的某一项的属性和object中的属性一致，drop array中的这个object。
+当predict是一个属性名，thisArg也有值时，从左边开始遍历属性名的属性值，与thisArg相比，当结果是true时，返回对应的索引。
 
 #### 参数
 *array (Array): 要查找的数组.
@@ -183,18 +208,31 @@ _.fill(['a','s','d','f'],2)
 返回找到元素的索引，否则返回-1
 
 #### 举例
+```js
+ var aas = [{'aa': false},{'aa': 'asd'},{'aa': 'dfg'}];
 
+//当predict是一个对象时
+_.findIndex(aas,{'aa': 'asd'});
+// =>1
 
+//当predict是一个属性名时
+ _.findIndex(aas,'aa');
+ // =>1
+
+//当predict是一个属性名，thisArg也有值时
+_.findIndex(aas,'aa','dfg')；
+// =>2
+```
 
 ### _.findLastIndex(array, [predicate=_.identity], [thisArg])
 
 这种是像_.findIndex一样，期待返回的是从后面开始查找到的元素的索引。
 
-如果创建的predicate是一个属性名，并且是_.property类型，那么返回的是被给定的元素的属性值。
+如果创建的predicate是一个对象，从右开始遍历array中的对象，并比predict的对象相比较，当结果是true的时候，停止遍历，返回对应对象的索引。
 
-如果thisArg也有值，则会对比predicate中的属性名的thisArg的值，drop。
+如果创建的predicate是一个属性名，从右开始遍历array中对应属性名的值，当属性名的属性值为true时，返回对应的索引。
 
-如果predicate是一个object,array中的某一项的属性和object中的属性一致，drop array中的这个object。
+当predict是一个属性名，thisArg也有值时，从右边开始遍历属性名的属性值，与thisArg相比，当结果是true时，返回对应的索引。
 
 #### 参数
 *array (Array): 要查找的数组.
@@ -208,14 +246,19 @@ _.fill(['a','s','d','f'],2)
 
 #### 举例
 ```js
-var users = [
-    { 'user': 'a ',  'active': false },
-    { 'user': 's ',    'active': true },
-    { 'user': 'd ', 'active': false }
-];
+var aas = [{'aa': false},{'aa': 'asd'},{'aa': 'dfg'},{'aa': 'asd'}];
 
-_.findLastIndex(users, 'active');
-// =>1
+//当predict是一个对象时
+_.findLastIndex(aas,{'aa': 'asd'});
+// =>3
+
+//当predict是一个属性名时
+_.findLastIndex(aas,'aa');
+// =>3
+
+//当predict是一个属性名并且thisArg也有值时
+_.findLastIndex(aas,'aa','dfg');
+// =>2
 ```
 
 ### _.fist(array)
@@ -400,11 +443,11 @@ _.pullAt([1,2,3,3,2,1],0,3);
 
 当predicate返回true时，移除所有的元素，返回由移除元素构成的数组。predicate与thisArg一定有关，并且可以调用三个参数：(value, index, array)。
 
-如果predicate是一个属性名，那么返回给定元素的属性值。
+如果创建的predicate是一个对象，遍历array中的对象，并比predict的对象相比较，当结果是true的时候，remove掉array中的对象，返回由remove掉的对象构成的数组。
 
-如果thisArg也有值的话，根据对应元素的属性值返回true，否则返回false。
+如果创建的predicate是一个属性名，遍历array中对应属性名的值，如果属性名的属性值为true时，remove掉，返回由remove掉的对象构成的数组。
 
-如果predicate是一个object，根据元素与给定object的属性返回true，否则返回false。
+当predict是一个属性名，thisArg也有值时，遍历属性名的属性值，与thisArg相比，当结果是true时，remove掉这个对象，返回由remove掉的对象构成的数组。
 
 #### Note
 不像_.filter, 这种方法会改变数组.
@@ -419,10 +462,21 @@ _.pullAt([1,2,3,3,2,1],0,3);
 
 #### 举例
 ```js
-var result1 = _.remove([1,2,3,4,5,6],function(n){
+ _.remove([1,2,3,4,5,6],function(n){
     return n % 2 == 0;
-})
+}；
 // =>[ 2, 4, 6 ]
+
+var aas = [{'aa': false},{'aa': 'asd'},{'aa': 'dfg'},{'aa': 'asd'}];
+
+console.log(_.remove(aas,{'aa': 'asd'}));
+// =>[ { aa: 'asd' }, { aa: 'asd' } ]
+
+console.log(_.remove(aas,'aa'));
+// =>[ { aa: 'asd' }, { aa: 'dfg' }, { aa: 'asd' } ]
+
+console.log(_.remove(aas,'aa','asd'));
+// =>[ { aa: 'asd' }, { aa: 'asd' } ]
 ```
 
 ### _.rest(array)
@@ -469,14 +523,13 @@ _.slice([1,2,3,4,5,6],1,4);
 
 ### _.sortedIndex(array, value, [iteratee=_.identity], [thisArg])
 
-在数组中插入一个数，返回新数组中这个数的第一个值的索引。
-Uses a binary search to determine the lowest index at which value should be inserted into array in order to maintain its sort order. If an iteratee function is provided it is invoked for value and each element of array to compute their sort ranking. The iteratee is bound to thisArg and invoked with one argument; (value).
+在数组中插入一个数，从数组左边开始使用二进制搜索来确定插入数值的索引最小的位置以维持数组的原来的排序顺序，返回插入的数在新数组中的索引。如果一个iteratee函数调用数组的每个元素的属性值来来计算他们的排名。iteratee与thisArg一定有关，并且它可以调用一个参数：（value)。
 
-如果predicate是一个属性名，那么返回给定元素的属性值。
+如果创建的predicate是一个对象，必须有thisArg并且是对象的属性名（否则返回0），从左开始遍历array中的对象，并比predict的对象相比较，当结果是true（predict对象的属性值小于array中对象的属性值时）的时候，继续遍历，直到false时停止遍历，并在这个对象之前插入给定对象，返回这个对象在新数组中的索引。
 
-如果thisArg也有值的话，根据对应元素的属性值返回true，否则返回false。
+如果创建的predicate是一个属性名，插入在最后，返回最后一个值的索引。
 
-如果predicate是一个object，根据元素与给定object的属性返回true，否则返回false。
+当predict是一个属性名，thisArg也有值时，插入早最前面，返回0.
 
 #### 参数
 *array (Array): 排序数组检查.
@@ -485,7 +538,7 @@ Uses a binary search to determine the lowest index at which value should be inse
 
 *[iteratee=_.identity] (Function|Object|string): 对数组的每个函数进行调用.
 
-*[thisArg] (): iteratee中的值.
+*[thisArg] (): iteratee的属性名.
 
 #### 返回
 返回被插入数组的的值在新数组中的索引
@@ -494,12 +547,30 @@ Uses a binary search to determine the lowest index at which value should be inse
 ```js
 _.sortedIndex([1,2,3,4,5,6],2);
 // =>1
+
+
+//当predict是一个对象时
+var aas = [{'aa':1},{'aa': 2},{'aa':3},{'aa':4}];
+console.log(_.sortedIndex(aas,{'aa':2},'aa'));
+// => 1
+//当predict是一个属性名时
+console.log(_.sortedIndex(aas,'aa'));
+// => 4
+//当predict是一个属性名并且thisArg也有值时
+console.log(_.sortedIndex(aas,'aa',6));
+// => 0
 ```
 
 ### _.sortedLastIndex(array, value, [iteratee=_.identity], [thisArg])
 
 
-这种方法类似g_.sortedIndex，期望返回这个数值在新排序数组中的最后一个数的索引。
+这种方法类似_.sortedIndex，期望返回这个数值在新排序数组中的最后一个数的索引。
+
+如果创建的predicate是一个对象，必须有thisArg并且是对象的属性名（否则返回新数组的最后一个索引），从右开始遍历array中的对象，并比predict的对象相比较，当结果是true（predict对象的属性值小于array中对象的属性值时）的时候，继续遍历，直到false时停止遍历，并在这个对象之前插入给定对象，返回这个对象在新数组中的索引。
+
+如果创建的predicate是一个属性名，插入在最后，返回最后一个值的索引。
+
+当predict是一个属性名，thisArg也有值时，插入在最后面，返回新数组的最后一个索引.
 
 #### 参数
 *array (Array): 排序数组检查.
@@ -517,6 +588,17 @@ _.sortedIndex([1,2,3,4,5,6],2);
 ```js
 _.sortedLastIndex([1,2,2,4,5,6],2);
 // =>3
+
+var aas = [{'aa':1},{'aa': 2},{'aa':3},{'aa':4}];
+
+console.log(_.sortedLastIndex(aas,{'aa': 2},'aa'));
+// =>2
+
+console.log(_.sortedLastIndex(aas,'aa'));
+// =>4
+
+console.log(_.sortedLastIndex(aas,'aa','2'));
+// =>4
 ```
 
 ### _.take(array, [n=1])
@@ -534,7 +616,6 @@ _.sortedLastIndex([1,2,2,4,5,6],2);
 ### 举例
 ```js
 _.take([1,2,3,4,5,6],4);
-// =>[ 1, 2, 3, 4 ]
 ```
 
 ### _.takeRight(array, [n=1])
@@ -557,13 +638,13 @@ _.takeRight([1,2,3,4,5,6],4);
 
 ### _.takeRightWhile(array, [predicate=_.identity], [thisArg])
 
-从数组右边开始取元素，知道predicate出现错误，这些元素构成一个新数组。predicate与thisArg一定有关并且可以调用三个参数：(value, index, array).
+从数组右边开始取元素，直到predicate出现错误，取出的这些元素构成一个新数组。predicate与thisArg一定有关并且可以调用三个参数：(value, index, array).
 
-如果predicate是一个属性名，那么返回给定元素的属性值。
+如果创建的predicate是一个对象，从右开始遍历array中的对象，并与predict的对象相比较，当结果是true的时候，取出array中的对象，继续遍历数组，直到结果为false时停止遍历，返回由取出的的对象构成的数组。
 
-如果thisArg也有值的话，根据对应元素的属性值返回true，否则返回false。
+如果创建的predicate是一个属性名，从右开始遍历array中对应属性名的值，如果属性名的属性值为true时，取出，继续遍历数组，直到结果为false时停止遍历，返回由取出的的对象构成的数组。
 
-如果predicate是一个object，根据元素与给定object的属性返回true，否则返回false。
+当predict是一个属性名，thisArg也有值时，从右边开始遍历属性名的属性值，与thisArg相比，当结果是true时，取出这个对象，继续遍历数组，直到结果为false时停止遍历，返回由取出的的对象构成的数组。
 
 #### 参数
 *array (Array): 排序数组检查.
@@ -581,17 +662,28 @@ _.takeRightWhile([1,2,3,4,5,6],function(n){
     return n > 3;
 });
 // =>[ 4, 5, 6 ]
+
+var aas = [{'aa': 'asd'},{'aa': false},{'aa': 'dfg'},{'aa': 'asd'}];
+
+console.log(_.takeRightWhile(aas,{'aa': 'asd'}));
+// =>[ { aa: 'asd' } ]
+
+console.log(_.takeRightWhile(aas,'aa'));
+// =>[ { aa: 'dfg' }, { aa: 'asd' } ]
+
+console.log(_.takeRightWhile(aas,'aa','asd'));
+// =>[ { aa: 'asd' } ]
 ```
 
 ### _.takeWhile(array, [predicate=_.identity], [thisArg])
 
 从数组左边开始取元素，直到predicate返回错误，取出的元素构成一个新数组。predicate与thisArg一定有关并且可以调用三个参数：(value, index, array).
 
-如果predicate是一个属性名，那么返回给定元素的属性值。
+如果创建的predicate是一个对象，从左开始遍历array中的对象，并比predict的对象相比较，当结果是true的时候，取出array中的对象，继续遍历数组，直到结果为false时停止遍历，返回由取出的的对象构成的数组。
 
-如果thisArg也有值的话，根据对应元素的属性值返回true，否则返回false。
+如果创建的predicate是一个属性名，从左开始遍历array中对应属性名的值，如果属性名的属性值为true时，取出，继续遍历数组，直到结果为false时停止遍历，返回由取出的的对象构成的数组。
 
-如果predicate是一个object，根据元素与给定object的属性返回true，否则返回false。
+当predict是一个属性名，thisArg也有值时，从左边开始遍历属性名的属性值，与thisArg相比，当结果是true时，取出这个对象，继续遍历数组，直到结果为false时停止遍历，返回由取出的的对象构成的数组。
 
 #### 参数
 *array (Array): 排序数组检查.
@@ -609,6 +701,17 @@ _.takeWhile([1, 2, 2, 4, 5, 6], function (n) {
     return n < 3;
 });
 // =>[ 1, 2, 2 ]
+
+var aas = [{'aa': 'asd'},{'aa': false},{'aa': 'dfg'},{'aa': 'asd'}];
+
+console.log(_.takeWhile(aas,{'aa': 'asd'}));
+// =>[ { aa: 'asd' } ]
+
+console.log(_.takeWhile(aas,'aa'));
+// =>[ { aa: 'asd' } ]
+
+console.log(_.takeWhile(aas,'aa',false));
+// =>[]
 ```
 
 ### _.union([arrays])
@@ -629,13 +732,13 @@ _.union([1,2,3],[1,2,4],[1,3,5]);
 
 ### _.uniq(array, [isSorted], [iteratee], [thisArg])
 
-Creates a duplicate-free version of an array, using SameValueZero for equality comparisons, in which only the first occurence of each element is kept. Providing true for isSorted performs a faster search algorithm for sorted arrays. If an iteratee function is provided it is invoked for each element in the array to generate the criterion by which uniqueness is computed. The iteratee is bound to thisArg and invoked with three arguments: (value, index, array).
+创建一个数组，根据数值来取出第一次出现的元素的值，这些值构成一个新数组，新数组按照取出的顺序来排序。也可以用true（isSorted的值为true）来执行更快的搜索算法排序数组。iteratee是绑定到thisArg和调用三个参数:(价值、索引数组)。
 
-如果iteratee是一个属性名，那么返回给定元素的属性值。
+//如果创建的iteratee是一个对象，遍历array中的对象，并与iteratee的对象相比较，取出属性值第一次出现的这个对象，继续遍历，返回取出的对象构成的数组。
 
-如果thisArg也有值的话，根据对应元素的属性值返回true，否则返回false。
+如果创建的iteratee是一个属性名，从左开始遍历array中对应属性名的值，取出属性值第一次出现的这个对象，继续遍历，返回取出的对象构成的数组。
 
-如果iteratee是一个object，根据元素与给定object的属性返回true，否则返回false。
+//当iteratee是一个属性名，thisArg也有值时，从左边开始遍历属性名的属性值，与thisArg相比，当结果是true时，drop掉这个对象，遇到false时停止遍历，返回剩下的对象构成的数组。
 
 #### 别名
 _.unique
@@ -651,6 +754,18 @@ _.unique
 
 #### 返回
 返回新的数组.
+
+#### 举例
+```js
+_.uniq([1,2,2,2,2,2],true)
+// =>[ 1, 2 ]
+
+//当predict是一个属性名时
+var aas = [{'aa':1},{'aa': 2},{'aa':2},{'aa':4}];
+console.log(_.uniq(aas,'aa'));
+// =>[ { aa: 1 }, { aa: 2 }, { aa: 4 } ]
+```
+
 
 ### _.unzip(array)
 

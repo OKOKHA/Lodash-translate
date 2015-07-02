@@ -70,7 +70,7 @@ describe('Array  Mode', function () {
             //expect(result.length).to.equals(2)
         })
     })
-    describe.only('remove',function(){
+    describe('ew',function(){
         it('',function(){
             var result1 = _.remove([1,2,3,4,5,6],function(n){
                 return n % 2 == 0;
@@ -122,24 +122,55 @@ describe('Array  Mode', function () {
             //expect(result.length).to.equals(5)
         })
     })
-    describe.only('chain',function(){
-        it('',function(){
-            var users = [
-                { 'user': 'barney',  'age': 36 },
-                { 'user': 'fred',    'age': 40 },
-                { 'user': 'pebbles', 'age': 1 }
-            ];
-
-            var youngest = _.chain(users)
-                .sortBy('age')
-                .map(function(chr) {
-                    return chr.user + ' is ' + chr.age;
-                })
-                .first()
-                .value();
-            //expect(result.length).to.equals(5)
+    describe('collection',function() {
+        it('', function () {
+            var aas = [{'aa': 'asd'},
+                {'aa': 'dfg'},
+                {'aa': false},
+                {'aa': 'asd'}]
+            //console.log(_.dropRightWhile(aas, 'aa','asd'));
+            //console.log(_.dropRightWhile(aas, {'aa':'dfg'}));
+            console.log(_.dropWhile(aas,'aa','asd'));
         })
     })
+    describe('collection',function() {
+        it('', function () {
+            var users = [
+                { 'user': 'aa',  'active': 3 },
+                { 'user': 'fred',    'active': false },
+                { 'user': false, 'active': 1}
+            ];
+
+// using the `_.matches` callback shorthand
+
+            console.log( _.dropWhile(users, 'user'));
+        })
+    })
+    describe.only('uniq',function() {
+        it('', function () {
+            //var aas = [{'aa':1},{'aa': 2},{'aa': 2},{'aa':3},{'aa':4}];
+            //console.log(_.uniq([1,2,2,2,2,2],true));
+            var aas = [{'aa':1},{'aa': 2},{'aa':2},{'aa':4}];
+            console.log(_.uniq(aas,'aa',3));
+        })
+    })
+    //describe.only('sorted',function() {
+    //    it('', function () {
+    //        //var aas = [{'aa':1},{'aa': 2},{'aa':3},{'aa':4}];
+    //        console.log(_.sortedIndex([{ 'x': 30 }, { 'x': 50 }],  'x'));
+    //    })
+    //})
+
+    //describe.only('find',function() {
+    //    it('', function () {
+    //        var users = [
+    //            { 'user': 'barney',  'active': false },
+    //            { 'user': 'fred',    'active': false },
+    //            { 'user': 'pebbles', 'active': true }
+    //        ];
+    //        console.log( _.findIndex(users, 'active'));
+    //    })
+    //})
 
 
 
