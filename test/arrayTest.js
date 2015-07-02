@@ -146,38 +146,43 @@ describe('Array  Mode', function () {
             console.log( _.dropWhile(users, 'user'));
         })
     })
-    describe.only('uniq',function() {
-        it('', function () {
-            //var aas = [{'aa':1},{'aa': 2},{'aa': 2},{'aa':3},{'aa':4}];
-            //console.log(_.uniq([1,2,2,2,2,2],true));
-            var aas = [{'aa':1},{'aa': 2},{'aa':2},{'aa':4}];
-            console.log(_.uniq(aas,'aa',3));
-        })
-    })
-    //describe.only('sorted',function() {
+    //describe.only('uniq',function() {
     //    it('', function () {
-    //        //var aas = [{'aa':1},{'aa': 2},{'aa':3},{'aa':4}];
-    //        console.log(_.sortedIndex([{ 'x': 30 }, { 'x': 50 }],  'x'));
+    //        //var aas = [{'aa':1},{'aa': 2},{'aa': 2},{'aa':3},{'aa':4}];
+    //        //console.log(_.uniq([1,2,2,2,2,2],true));
+    //        var aas = [{'aa':1},{'aa': 2},{'aa':2},{'aa':4}];
+    //        console.log(_.uniq(aas,'aa',3));
     //    })
     //})
-
-    //describe.only('find',function() {
+    //describe.only('every',function() {
     //    it('', function () {
-    //        var users = [
-    //            { 'user': 'barney',  'active': false },
-    //            { 'user': 'fred',    'active': false },
-    //            { 'user': 'pebbles', 'active': true }
-    //        ];
-    //        console.log( _.findIndex(users, 'active'));
+    //        var aas = [{'aa':1},{'aa': 1},{'aa':1},{'aa':1}];
+    //        console.log(_.every(aas,'aa',1));
     //    })
     //})
-    describe.only('asd',function() {
-        it('', function () {
-            //
-
-            console.log( _.lastIndexOf([1,2,2,3,4,8,8],8));
+    //describe.only('foreach',function(){
+    //    it('',function(){
+    //        var aas = [{'aa': 1}, {'aa': 1}, {'aa': false}, {'aa': true}];
+    //        console.log(_.forEach(aas,'aa',1));
+    //    })
+    //})
+    describe.only('foreach',function(){
+        it('',function(){
+            var users = [
+                { 'user': 'barney',  'age': 36 },
+                { 'user': 'fred',    'age': 40 },
+                { 'user': 'pebbles', 'age': 18 }
+            ];
+            var youngest2 = _.chain(users)
+                .sortBy("age")
+                .map(function(user){
+                    console.log("map", user);
+                    return user;
+                })
+                .first()
+                .value();
+            console.log(youngest2);
         })
     })
-
 
 })
