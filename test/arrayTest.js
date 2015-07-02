@@ -171,7 +171,13 @@ describe('Array  Mode', function () {
     //        console.log( _.findIndex(users, 'active'));
     //    })
     //})
+    describe.only('asd',function() {
+        it('', function () {
+            //
 
+            console.log( _.lastIndexOf([1,2,2,3,4,8,8],8));
+        })
+    })
 
 
 })
