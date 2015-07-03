@@ -13,116 +13,10 @@ describe('Array  Mode', function () {
             expect(result.length).to.equal(4)
         })
     })
-    describe('first', function () {
-        it('', function () {
-            var list = [1, 2, 3, 4, 5, 6, 7]
-            var result = _.first(list)
-            console.log(result);
-            expect(result.length).to.equal()
-        })
-    })
-    describe('flatten',function(){
-        it('',function(){
-            var list = [1,2,[3,[4,5]]]
-            var result = _.flatten(list,true)
-            console.log(result);
-            expect(result.length).to.equal(5)
-        })
-    })
-    describe('flattenDeep',function(){
-        it('',function(){
-            var list= [1,2,[3,[4,5]]]
-            var result= _.flattenDeep(list)
-            console.log(result);
-            expect(result.length).to.equals(5)
-        })
-    })
-    describe('intersection',function(){
-        it('',function(){
-            var list1=[1,2,3]
-            var list2=[1,2,4]
-            var list3=[1,3,5]
-            var result= _.intersection(list1,list2,list3)
-            console.log(result);
-            expect(result.length).to.equals(1)
-        })
-    })
-    describe('last',function(){
-        it('',function(){
-            var list= [1,2,3,4,5]
-            var result= _.last(list)
-            console.log(result);
-            //expect(result.length).to.equals(1)
-        })
-    })
-    describe('pullAt',function(){
-        it('',function(){
-           // var list= [1,2,3,3,2,1]
-            //var result= _.pullAt(list,0,3)
-           var result1 = _.dropWhile([1,2,3,4,5,6],function(n){
-                return n % 2 == 0;
-           })
-            console.log(result1);
-            var result1 = _.dropRightWhile([1,2,3,4,5,6],function(n){
-                return n>5;
-            })
-            console.log(result1);
-            //expect(result.length).to.equals(2)
-        })
-    })
-    describe('ew',function(){
-        it('',function(){
-            var result1 = _.remove([1,2,3,4,5,6],function(n){
-                return n % 2 == 0;
-            })
-            console.log(result1);
-            //expect(result.length).to.equals(2)
-        })
-    })
-    describe('rest',function(){
-        it('',function(){
-            var result1 = _.rest([1,2,3,4,5,6])
-            console.log(result1);
-            //expect(result.length).to.equals(2)
-        })
-    })
-    describe('slice',function(){
-        it('',function(){
-            var result = _.slice([1,2,3,4,5,6],1,4)
-            console.log(result);
-            expect(result.length).to.equals(3)
-        })
-    })
-    describe('sort',function(){
-        it('',function(){
-            var result1 = _.takeRightWhile([1,2,3,4,5,6],function(n){
-                return n > 3;
-                })
-            console.log(result1);
-            var result2 = _.takeWhile([1, 2, 2, 4, 5, 6], function (n) {
-                return n < 3;
-            })
-            console.log(result2);
-            //expect(result.length).to.equals(2)
-        })
-    });
-    describe('zip',function(){
-        it('',function(){
-           var result = _.zip([1,2,3,1,3],[1,2,3],[1,2,3,4])
-           console.log(result);
-            //console.log(_.unzipWith(result, _.add));
-            //expect(result.length).to.equals(5)
-        })
-    })
-    describe('zipWith',function(){
-        it('',function(){
-            var result = _.zipWith([1,2,3,4],[5,6,7,8,],[1,3],_.add)
-            console.log(result);
-            //console.log(_.unzipWith(result, _.add));
-            //expect(result.length).to.equals(5)
-        })
-    })
-    describe('collection',function() {
+
+
+
+    describe('dropWhile',function() {
         it('', function () {
             var aas = [{'aa': 'asd'},
                 {'aa': 'dfg'},
@@ -133,19 +27,7 @@ describe('Array  Mode', function () {
             console.log(_.dropWhile(aas,'aa','asd'));
         })
     })
-    describe('collection',function() {
-        it('', function () {
-            var users = [
-                { 'user': 'aa',  'active': 3 },
-                { 'user': 'fred',    'active': false },
-                { 'user': false, 'active': 1}
-            ];
 
-// using the `_.matches` callback shorthand
-
-            console.log( _.dropWhile(users, 'user'));
-        })
-    })
     //describe.only('uniq',function() {
     //    it('', function () {
     //        //var aas = [{'aa':1},{'aa': 2},{'aa': 2},{'aa':3},{'aa':4}];
@@ -154,35 +36,50 @@ describe('Array  Mode', function () {
     //        console.log(_.uniq(aas,'aa',3));
     //    })
     //})
+
     //describe.only('every',function() {
     //    it('', function () {
     //        var aas = [{'aa':1},{'aa': 1},{'aa':1},{'aa':1}];
     //        console.log(_.every(aas,'aa',1));
     //    })
     //})
-    //describe.only('foreach',function(){
-    //    it('',function(){
-    //        var aas = [{'aa': 1}, {'aa': 1}, {'aa': false}, {'aa': true}];
-    //        console.log(_.forEach(aas,'aa',1));
-    //    })
-    //})
-    describe.only('foreach',function(){
+
+    describe.only('collection',function(){
         it('',function(){
-            var users = [
-                { 'user': 'barney',  'age': 36 },
-                { 'user': 'fred',    'age': 40 },
-                { 'user': 'pebbles', 'age': 18 }
+            //console.log(_.sortByAll([1, 3, 4], function(n) {
+            //    return Math.sin(n);
+            //}));
+            //var users = [
+            //    { 'user': 'fred',   'age': 48 },
+            //    { 'user': 'barney', 'age': 34 },
+            //    { 'user': 'fred',   'age': 42 },
+            //    { 'user': 'barney', 'age': 36 }
+            //];
+            //console.log(_.sortByOrder(users, [ 'age'], ['desc']));
+
+            var aas=[
+                { 'aa': 'aa', 'age': 15 },
+                { 'aa': 'ss', 'age': 25 },
+                { 'aa': 'aa', 'age': 17 },
+                { 'aa': 'ss', 'age': 27 }
             ];
-            var youngest2 = _.chain(users)
-                .sortBy("age")
-                .map(function(user){
-                    console.log("map", user);
-                    return user;
-                })
-                .first()
-                .value();
-            console.log(youngest2);
+            console.log(_.sortByOrder(aas, ['aa','age'],['desc','desc']));
+            //console.log(_.sortByOrder(users));
+            //var aas = [{'aa': 2,'ss':'aa'}, {'aa': 3,'ss':'aa'},  {'aa': false},{'aa':true}];
+            //console.log(_.where(aas,{'ss':'aa'}));
         })
     })
+
+    //describe.only('collection',function() {
+    //    it('', function () {
+    //        var aas = { 'a':1, 'b': 1 };
+    //        console.log(_.size(aas));
+    //        console.log(_.map({ 'a':1, 'b': 1 },function(n,key){
+    //            return key;
+    //        } ));
+    //
+    //        console.log(_.size('asdfg'));
+    //    })
+    //})
 
 })
