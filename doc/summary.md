@@ -4,3 +4,7 @@
    * [Array](array.md)
    * [Chain](chain.md)
    * [Collection](collection.md)
+   * [Date](date.md)
+   * [Function](function.md)
+   * [Math](math.md)
+   * [Number](number.md)
