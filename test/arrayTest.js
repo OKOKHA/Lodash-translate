@@ -44,7 +44,7 @@ describe('Array  Mode', function () {
     //    })
     //})
 
-    describe.only('collection',function(){
+    describe('collection',function(){
         it('',function(){
             //console.log(_.sortByAll([1, 3, 4], function(n) {
             //    return Math.sin(n);

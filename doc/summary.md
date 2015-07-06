@@ -8,3 +8,6 @@
    * [Function](function.md)
    * [Math](math.md)
    * [Number](number.md)
+   * [Object](object.md)
+   * [String](string.md)
+

@@ -8,7 +8,7 @@ describe('number mode',function(){
             console.log(_.inRange(4,4));
         })
     })
-    describe.only('random',function(){
+    describe('random',function(){
         it('',function(){
             console.log(_.random(24));
             console.log(_.random(2.1,24.2));

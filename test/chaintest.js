@@ -106,7 +106,7 @@ describe('Chain Mode',function(){
             console.log(_([1, 2, 3]).toString());
         })
     })
-    describe.only('prototype.value',function(){
+    describe('prototype.value',function(){
         it('',function(){
             console.log(_([1, 2, 3]).value());
         })
