@@ -16,7 +16,6 @@ describe('collection  Mode', function () {
             console.log(_.dropWhile(aas,'aa','asd'));
         })
     })
-
     describe('uniq',function() {
         it('', function () {
             //var aas = [{'aa':1},{'aa': 2},{'aa': 2},{'aa':3},{'aa':4}];

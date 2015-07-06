@@ -1,6 +1,7 @@
 var _=require('lodash');
 var expect=require('chai').expect;
 
+
 describe('number mode',function(){
     describe('inrange',function(){
         it('',function(){

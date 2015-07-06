@@ -1,6 +1,7 @@
 var _ = require('lodash');
 var expect = require('chai').expect;
 
+
 describe('function mode',function(){
     describe('after',function(){
         it('',function(){

@@ -4,6 +4,7 @@
 var _ = require('lodash');
 var expect = require('chai').expect;
 
+
 describe('Array  Mode', function () {
     describe('chunk', function () {
         it('根据参数切割数组', function () {

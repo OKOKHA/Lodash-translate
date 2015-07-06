@@ -1,6 +1,7 @@
 var _=require('lodash');
 var expect = require('chai').expect;
 
+
 describe('Chain Mode',function(){
     describe('chain',function(){
         it('',function(){

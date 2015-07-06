@@ -73,3 +73,6 @@ Returns
 (Function): Returns the new bound function.
 
 Example
+
+
+
