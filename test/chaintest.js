@@ -111,4 +111,6 @@ describe('Chain Mode',function(){
             console.log(_([1, 2, 3]).value());
         })
     })
+
+
 })
