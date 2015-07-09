@@ -1,14 +1,16 @@
 #'Function' methods
 
+
+
 ##after
 
-```_.after(n, func)```
+**_.after(n, func)**
 
-是_.before的相反，这种方法返回一个函数，在当func和n相等时，调用一次，否则调用多次。
+是_.before的相反，这种方法返回一个函数，func在后面的函数调用n或者多次之后再调用。
 
 ####Arguments
 
-* n (number): 在函数被调用之前调用n.
+* n (number): 在函数被调用之前调用的次数.
 
 * func (Function): 要限制的函数.
 
@@ -18,61 +20,568 @@
 
 ####Example
 ```js
-
+var saves = ['profile', 'settings'];
+var done = _.after(saves.length, function() {
+  console.log('done saving!');
+});
+_.forEach(saves, function(type) {
+  asyncSave({ 'type': type, 'complete': done });
+});
+//=>在两个异步保存完成之后再调用function
 ```
 
 ##ary
 
-```_.ary(func, [n=func.length])```
+**_.ary(func, [n=func.length])**
 
-返回一个函数，使得这个函数最多有n个参数而没有其他的参数。
+返回一个最多可以有n个参数而忽略其他参数的函数。
+
 ####Arguments
 
 * func (Function): 限制参数的函数.
 
-* [n=func.length] (number): 参数数量的上限.
+* [n=func.length] (number): 参数数量上限.
 
 ####Returns
+
 (Function): 返回一个新的函数.
 
 ####Example
-
-
-
-
+```js
+_.map(['6', '8', '10'], _.ary(parseInt, 1));
+// → [6, 8, 10]  //_.ary中parseInt字符变成字符串
+```
 ##before
-```_.before(n, func)```
 
-返回一个函数，调用.
+**_.before(n, func)**
+
+返回了一个函数调用func，与它绑定的和创建的函数的参数，而它被调用小于n次。后续调用创建的函数返回最后func调用的结果。
 
 ####Arguments
-* n (number): func不再被调用时The number of calls at which func is no longer invoked.
+
+* n (number): 参数调用次数上限.
 
 * func (Function): 要限制的函数.
 
 ####Returns
+
 (Function): 返回一个新的被限制了的函数.
 
 ####Example
+```js
+jQuery('#add').on('click', _.before(5, addContactToList));
+//在click之前可以4次addContactToList。
+```
 
+##bind
 
-_.bind(func, thisArg, [partials])
-# Ⓢ Ⓝ
+**_.bind(func, thisArg, [partials])**
 
-Creates a function that invokes func with the this binding of thisArg and prepends any additional _.bind arguments to those provided to the bound function.
+创建一个函数调用func与此绑定thisArg的，并预置任何其他_.bind参数给那些提供给绑定的功能。
 
-The _.bind.placeholder value, which defaults to _ in monolithic builds, may be used as a placeholder for partially applied arguments.
+该_.bind.placeholder值，默认为_在整体构建，可以用作部分应用的参数的一个占位符。
 
 Note: Unlike native Function#bind this method does not set the "length" property of bound functions.
 
+####Arguments
+* func (Function): 要绑定的功能.
+
+* thisArg (*): 与函数绑定的值.
+
+* [partials] (…*): 部分应用的参数.
+
+####Returns
+
+(Function): 返回新的绑定函数.
+
+####Example
+```js
+var greet = function(greeting, punctuation) {
+    return greeting + ' ' + this.user + punctuation;
+};
+var object = { 'user': 'fred' };
+var bound = _.bind(greet, object);
+var re = bound( 'hi','!'); //'hi'为greeting,'!'为punctuation
+//=>hi fred!
+```
+
+##bindAll
+**_.bindAll(object, [methodNames])**
+
+结合一个对象本身的方法到一个对象中，覆盖现有的方法。方法名可以为单独的参数或者方法名的数组。如果没有给定方法名，返回所有可枚举功能特性，拥有和继承的对象。
+
+Note: 这个方法不设置'length'属性。
+
+####Arguments
+* object (Object): 对象绑定和分配方法.
+
+* [methodNames] (…(string|string[]): 绑定对象的方法名，可以是个单独的方法名或者方法名的数组。
+
+####Returns
+
+(Object): 返回一个对象.
+
+####Example
+```js
+            var view = {
+                'user': 'senina',
+                'age':18
+                }
+            _.bindAll(view);
+
+```
+//=>{ user: 'senina', age: 18 }
+
+##bindKey
+
+**_.bindKey(object, key, [partials])**
+
+创建一个函数在对象[key]中调用方法，并预置其他_.bindKey参数给那些提供给绑定的函数。
+
+这种方法允许绑定功能，引用可能被重新定义或尚不存在的方法不同于_.bind。See Peter Michaux’s article for more details.
+
+该_.bindKey.placeholder值，默认为_在整体构建，可以作为部分应用的参数中的一个占位符。
+
+#### Arguments
+* object (Object): 属于对象的方法。
+
+* key (string): 方法的key.
+
+* [partials] (…*): 部分应用的参数.
+
+#### Returns
+(Function): 返回新的绑定的函数。
+
+#### Example
+```js
+var object = {
+    'user': 'fred',
+    'greet': function(greeting, punctuation) {
+        return greeting + ' ' + this.user + punctuation;
+    }
+};
+var bound = _.bindKey(object, 'greet'); //greet是object的key
+var re = bound( 'hi','!');
+//greeta函数中的参数，也是partials部分
+console.log(re);
+//=>hi fred!
+```
+
+##curry
+
+**_.curry(func, [arity=func.length])**
+
+返回一个函数，接受func的，当调用的一个或多个参数或者调用FUNC返回它的结果，如果所有FUNC参数已被提供，或返回一个接受一个或一个以上的剩余FUNC参数等的功能的功能。如果func.length不足以FUNC的元数可以指定。Creates a function that accepts one or more arguments of func that when called either invokes func returning its result, if all func arguments have been provided, or returns a function that accepts one or more of the remaining func arguments, and so on. The arity of func may be specified if func.length is not sufficient.
+
+The _.curry.placeholder value, which defaults to _ in monolithic builds, may be used as a placeholder for provided arguments.
+
+Note: This method does not set the "length" property of curried functions.
+
+####Arguments
+* func (Function): The function to curry.
+
+* [arity=func.length] (number): The arity of func.
+
+####Returns
+(Function): Returns the new curried function.
+
+####Example
+```js
+
+```
+
+##defer
+
+**_.defer(func, [args])**
+
+延迟调用func直到当前调用桟被清除。当任何额外的参数被调用时都提供给func。
+
+####Arguments
+* func (Function): 要延迟的函数.
+
+* [args] (…*): 调用函数的参数.
+
+####Returns
+(number): 返回计时器id.
+
+####Example
+```js
+            _.delay(function(text) {
+                console.log(text);
+            }, 1000, 'assd');
+//=>asdfg
+```
+
+
+##delay
+
+**_.delay(func, wait, [args])**
+
+等待数毫秒之后再调用函数。任何额外的参数被调用时都提供给函数。
+
+####Arguments
+
+* func (Function): 要延迟的函数.
+
+* wait (number): 要延迟调用的时间毫秒数.
+
+* [args] (…*): 调用函数的参数.
+
+####Returns
+
+(number): 返回计时器id.
+
+####Example
+```js
+_.delay(function(text) {
+  console.log(text);
+}, 1000, 'later');
+//延时1000ms之后再调用function
+```
+
+##flow
+
+**_.flow([funcs])**
+
+创建一个函数返回调用与所创建的功能，其中，每个连续的调用得到的返回值都提供给下一个调用的函数，返回的是最终的结果。
+
+####Arguments
+* [funcs] (…Function): 要调用的一个或者多个函数.从左到右调用函数。
+
+####Returns
+(Function): 返回新的函数.
+
+####Example
+```js
+            function times(n){
+                return n*3;
+            }
+            function square(n){
+                return n*n;
+            }
+            var re = _.flow(times,square);
+            console.log(re(2));
+//=>36  先调用函数times得到2*3=6，在调用函数square得到6*6=36
+```
+
+##flowRight
+
+**_.flowRight([funcs])**
+
+这个方法和_.flow一样，除了从给定的函数中，它是从右边的函数开始调用的。
+
+####Aliases
+_
+.backflow, _.compose
+
+####Arguments
+
+[funcs] (…Function): 要调用的函数.
+
+####Returns
+
+(Function): 返回新的函数.
+
+####Example
+```js
+            function times(n){
+                return n*3;
+            }
+            function square(n){
+                return n*n;
+            }
+            var re = _.flowRight(times,square);
+            console.log(re(2));
+//=>12  先调用square 再调用times
+```
+
+##memoize
+**_.memoize(func, [resolver])**
+
+返回一个记住func的结果的函数。如果解析器提供它确定高速缓存密钥，用于存储结果的基础上提供给memoized函数的参数。默认情况下，提供给memoized函数的第一个参数被强制为字符串，并用作缓存键。该func被调用的函数memoized的这一具有约束力。
+
+注：该缓存暴露在memoized功能缓存属性。它的建立可以通过一个实例的实施得到，已经，并设置地图界面的方法更换_.memoize.Cache构造进行定制。
+
+####Arguments
+* func (Function): 要记住它的输出的函数.
+
+* [resolver] (Function): 解决缓存键的函数.
+
+####Returns
+(Function): 返回新的记忆函数.
+
+####Example
+```js
+            function times(n){
+                return n*3;
+            }
+            var re = _.memoize(times);
+            console.log(re(4));
+//=>12
+```
+
+##modArgs
+
+**_.modArgs(func, [transforms])**
+
+通过相应的转换功能调用函数中相应的参数，返回一个新函数。
+
+####Arguments
+
+* func (Function): 要包装的函数.
+
+* [transforms] (…(Function|Function[]): 要转化参数的函数，可以是单独的函数或者函数的数组。
+
+####Returns
+
+(Function): 返回新的函数.
+
+####Example
+```js
+           function times(n){
+                return n*3;
+            }
+            function square(n){
+                return n*n;
+            }
+            var re = _.modArgs(function (x,y){
+                return [x,y]
+            },times,square);
+            console.log(re(1,2));
+//[ 3 , 4 ]   第一个参数对应第一个函数times转化，第二个参数对应第二个函数square转化
+```
+##negate
+
+**_.negate(predicate)**
+
+调用predicate，返回函数中predicate要求的相反的元素。predicate用来调用函数的绑定值和参数。
+
+####Arguments
+
+* predicate (Function): 用来调用取相反元素的函数.
+
+###Returns
+
+(Function): 返回新的函数.
+
+####Example
+```js
+            function times(n){
+                return n%3==0;
+            }
+            var list=[1,2,3,4,5,6];
+            var re1 = _.filter(list, _.negate(times));
+            console.log(re1);
+            expect(re1.length).to.equal(4);
+//=>[ 1, 2, 4, 5 ]   _.negate取不是被3整除的数，_.filter返回过滤出来的_.negate(times)这部分的元素。
+```
+##once
+
+**_.once(func)**
+
+返回一个函数，只能调用一次。重复调用返回第一次调用的值。函数和返回的函数的绑定值和参数一起被调用。
+
+####Arguments
+
+* func (Function): 被限制的函数。
+
+####Returns
+
+(Function): 返回新的限制的函数.
+
+####Example
+```js
+            function times(n){
+                return n*3;
+            }
+            var initialize = _.once(times);
+            console.log(initialize(1)); //=>3
+            console.log(initialize(2)); //=>3
+```
+
+##partial
+
+**_.partial(func, [partials])**
+
+
+Creates a function that invokes func with partial arguments prepended to those provided to the new function. This method is like _.bind except it does not alter the this binding.
+
+创建一个函数调用FUNC与前置到那些提供给新的功能的部分参数。这种方法类似于_.bind但它不会改变此绑定。
+
+该_.partial.placeholder值，默认为_在整体构建，可以用作部分应用的参数中的一个占位符。
+
+Note: 这个方法不设置部分应用函数的length属性值.
+
+####Arguments
+* func (Function): 部分应用参数的函数。
+
+* [partials] (…*): 部分应用的参数。
+
+####Returns
+(Function): 返回新的部分应用的函数.
+
+####Example
+```js
+
+
+```
+
+##partial
+**_.partial(func, [partials])**
+
+
+Creates a function that invokes func with partial arguments prepended to those provided to the new function. This method is like _.bind except it does not alter the this binding.
+
+The _.partial.placeholder value, which defaults to _ in monolithic builds, may be used as a placeholder for partially applied arguments.
+
+Note: This method does not set the "length" property of partially applied functions.
+
+#### Arguments
+
+* func (Function): The function to partially apply arguments to.
+
+* [partials] (…*): The arguments to be partially applied.
+
+#### Returns
+
+(Function): Returns the new partially applied function.
+
+#### Example
+```js
+
+
+```
+
+## partialRight
+
+**_.partialRight(func, [partials])**
+
+
+This method is like _.partial except that partially applied arguments are appended to those provided to the new function.
+
+The _.partialRight.placeholder value, which defaults to _ in monolithic builds, may be used as a placeholder for partially applied arguments.
+
+Note: This method does not set the "length" property of partially applied functions.
+
+#### Arguments
+
+* func (Function): The function to partially apply arguments to.
+
+* [partials] (…*): The arguments to be partially applied.
+
+#### Returns
+
+(Function): Returns the new partially applied function.
+
+#### Example
+```js
+
+```
+
+rearg
+**_.rearg(func, indexes)**
+
+调用func返回一个函数，根据其中第一个索引处的参数值是作为第一个参数指定的索引排列参数，第二个索引处的参数值是作为第二个参数，依此类推。
+
+#### Arguments
+
+* func (Function): 重新排列参数的函数.
+
+* indexes (…(number|number[]): 重新排列参数的索引，可以使单独的索引或者由索引构成的数组。
+
+#### Returns
+
+(Function): 返回新的函数.
+
+#### Example
+```js
+            var rearged = _.rearg(function(a, b, c) {
+                return [a, b, c];
+            }, 2, 0, 1);
+            console.log(rearged('a', 'c', 'b'));
+//[ 'b', 'a', 'c' ]
+```
+
+## restParam
+
+**_.restParam(func, [start=func.length-1])**
+
+
+Creates a function that invokes func with the this binding of the created function and arguments from start and beyond provided as an array.
+
+Note: This method is based on the rest parameter.
+
+#### Arguments
+
+* func (Function): The function to apply a rest parameter to.
+
+* [start=func.length-1] (number): The start position of the rest parameter.
+
+#### Returns
+
+(Function): Returns the new function.
+
+#### Example
+```js
+
+
+
+```
+
+
+
+_.spread(func)
+# Ⓢ Ⓝ
+
+Creates a function that invokes func with the this binding of the created function and an array of arguments much like Function#apply.
+
+Note: This method is based on the spread operator.
+
 Arguments
-func (Function): The function to bind.
-thisArg (*): The this binding of func.
-[partials] (…*): The arguments to be partially applied.
+func (Function): The function to spread arguments over.
 Returns
-(Function): Returns the new bound function.
+(Function): Returns the new function.
 
 Example
 
 
+
+_.throttle(func, [wait=0], [options])
+# Ⓢ Ⓝ
+
+Creates a throttled function that only invokes func at most once per every wait milliseconds. The throttled function comes with a cancel method to cancel delayed invocations. Provide an options object to indicate that func should be invoked on the leading and/or trailing edge of the wait timeout. Subsequent calls to the throttled function return the result of the last func call.
+
+Note: If leading and trailing options are true, func is invoked on the trailing edge of the timeout only if the the throttled function is invoked more than once during the wait timeout.
+
+See David Corbacho’s article for details over the differences between _.throttle and _.debounce.
+
+Arguments
+func (Function): The function to throttle.
+[wait=0] (number): The number of milliseconds to throttle invocations to.
+[options] (Object): The options object.
+[options.leading=true] (boolean): Specify invoking on the leading edge of the timeout.
+[options.trailing=true] (boolean): Specify invoking on the trailing edge of the timeout.
+Returns
+(Function): Returns the new throttled function.
+
+Example
+
+
+## wrap
+
+**_.wrap(value, wrapper)**
+
+创建一个功能，可提供价值的包装函数作为第一个参数。提供给函数的任何额外的参数附加到那些提供给包装函数。该包装被调用的功能创建的这一具有约束力。
+
+#### Arguments
+
+* value (*): 要包装的值.
+
+* wrapper (Function): 用来包装的函数.
+
+#### Returns
+
+(Function): 返回新的函数.
+
+#### Example
 
