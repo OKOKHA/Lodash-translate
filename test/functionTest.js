@@ -9,7 +9,7 @@ describe('function  Mode', function () {
                 return [a, b, c];
             };
             var re= _.curry(abc);
-            console.log(re(1,2,3));
+            console.log(re(1, 2)(1));
         })
     })
     describe('ary', function () {
@@ -50,6 +50,28 @@ describe('function  Mode', function () {
             var bound = _.bindKey(object, 'greet');
             var re = bound( 'hi','!');
             console.log(re);
+        })
+    })
+    describe('curry', function () {
+        it('将参数按照结构和占位符从左到右排序', function () {
+            var abc = function(a, b, c) {
+                return [a, b, c];
+            };
+            var curried = _.curry(abc);
+            var re = curried(1)(_,2)(3);//有占位符排在后面
+            console.log(re);
+            expect(re.length).to.equal(3);
+        })
+    })
+    describe('curryRight', function () {
+        it('将参数按照结构和占位符从右到左排序', function () {
+            var abc = function(a, b, c) {
+                return [a, b, c];
+            };
+            var curried = _.curryRight(abc);
+            var re = curried(1)(2, _)(3);;//有占位符排在前面
+            console.log(re);
+            expect(re.length).to.equal(3);
         })
     })
     describe('defer', function () {
@@ -145,12 +167,29 @@ describe('function  Mode', function () {
             console.log(initialize(2));
         })
     })
-    describe.only('rearg', function () {
+    describe('rearg', function () {
         it('', function () {
             var rearged = _.rearg(function(a, b, c) {
                 return [a, b, c];
             }, 2, 0, 1);
             console.log(rearged('a', 'c', 'b'));
+        })
+    })
+    describe('restParam', function () {
+        it('', function () {
+            var say = _.restParam(function(what, names) {
+                return what + ' ' + _.initial(names).join(', ') +
+                    (_.size(names) > 1 ? ', & ' : '') + _.last(names);
+            });
+            console.log(say('hello', 'fred', 'barney', 'pebbles'));
+        })
+    })
+    describe('spread', function () {
+        it('', function () {
+            var say = _.spread(function(who, what) {
+                return who + ' says ' + what;
+            });
+            console.log(say(['hello', 'fred']));
         })
     })
 })

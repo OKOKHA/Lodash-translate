@@ -166,32 +166,65 @@ var re = bound( 'hi','!');
 console.log(re);
 //=>hi fred!
 ```
-
-##curry
+#### curry
 
 **_.curry(func, [arity=func.length])**
 
-返回一个函数，接受func的，当调用的一个或多个参数或者调用FUNC返回它的结果，如果所有FUNC参数已被提供，或返回一个接受一个或一个以上的剩余FUNC参数等的功能的功能。如果func.length不足以FUNC的元数可以指定。Creates a function that accepts one or more arguments of func that when called either invokes func returning its result, if all func arguments have been provided, or returns a function that accepts one or more of the remaining func arguments, and so on. The arity of func may be specified if func.length is not sufficient.
+创建一个函数，函数可以有一个或者多个参数，当调用函数时，返回调用的结果，如果所有的函数参数都被给定，返回一个有一个或者多个函数参数的函数。参数数量可能被指定如果函数的长度不明确的话。curry函数将参数按照结构从左到右排序。先排普通参数再排占位符参数。
 
-The _.curry.placeholder value, which defaults to _ in monolithic builds, may be used as a placeholder for provided arguments.
+函数中占位符默认为_整体构建，可以用占位符来指定参数。
 
-Note: This method does not set the "length" property of curried functions.
+Note: 这个方法不设置curry函数的长度属性。
 
-####Arguments
-* func (Function): The function to curry.
+#### Arguments
 
-* [arity=func.length] (number): The arity of func.
+* func (Function): 要curry的函数.
 
-####Returns
-(Function): Returns the new curried function.
+* [arity=func.length] (number): 函数参数数量上限.
 
-####Example
+#### Returns
+
+(Function): 返回新的柯里化函数.
+
+#### Example
 ```js
-
+var abc = function(a, b, c) {
+    return [a, b, c];
+};
+var curried = _.curry(abc);
+curried(1)(_,2)(3);//有占位符排在后面
+//=>[ 1, 3, 2 ]
 ```
+#### curryRight
 
+**_.curryRight(func, [arity=func.length])**
+
+这个方法和_.curry一样，除了函数将参数按照结构从右到左排序。先排占位符参数再排普通参数。
+
+函数中占位符默认为_整体构建，可以用占位符来指定参数。
+
+Note: 这个方法不设置curry函数的长度属性。
+
+#### Arguments
+
+* func (Function): 要curry的函数.
+
+* [arity=func.length] (number): 函数参数数量上限.
+
+#### Returns
+
+(Function): 返回新的curry函数.
+
+#### Example
+```js
+var abc = function(a, b, c) {
+    return [a, b, c];
+};
+var curried = _.curryRight(abc);
+curried(1)(2, _)(3);;//有占位符排在前面
+//=>[ 2, 3, 1 ]
+```
 ##defer
-
 **_.defer(func, [args])**
 
 延迟调用func直到当前调用桟被清除。当任何额外的参数被调用时都提供给func。
@@ -403,10 +436,7 @@ _
 
 **_.partial(func, [partials])**
 
-
-Creates a function that invokes func with partial arguments prepended to those provided to the new function. This method is like _.bind except it does not alter the this binding.
-
-创建一个函数调用FUNC与前置到那些提供给新的功能的部分参数。这种方法类似于_.bind但它不会改变此绑定。
+返回一个函数调用FUNC与前置到那些提供给新的功能的部分参数。这种方法类似于_.bind但它不会改变此绑定。
 
 该_.partial.placeholder值，默认为_在整体构建，可以用作部分应用的参数中的一个占位符。
 
@@ -426,27 +456,22 @@ Note: 这个方法不设置部分应用函数的length属性值.
 
 ```
 
-##partial
-**_.partial(func, [partials])**
+_.partialRight(func, [partials])
+# Ⓢ Ⓝ
 
+This method is like _.partial except that partially applied arguments are appended to those provided to the new function.
 
-Creates a function that invokes func with partial arguments prepended to those provided to the new function. This method is like _.bind except it does not alter the this binding.
-
-The _.partial.placeholder value, which defaults to _ in monolithic builds, may be used as a placeholder for partially applied arguments.
+The _.partialRight.placeholder value, which defaults to _ in monolithic builds, may be used as a placeholder for partially applied arguments.
 
 Note: This method does not set the "length" property of partially applied functions.
 
-#### Arguments
-
-* func (Function): The function to partially apply arguments to.
-
-* [partials] (…*): The arguments to be partially applied.
-
-#### Returns
-
+Arguments
+func (Function): The function to partially apply arguments to.
+[partials] (…*): The arguments to be partially applied.
+Returns
 (Function): Returns the new partially applied function.
 
-#### Example
+Example
 ```js
 
 
@@ -456,7 +481,6 @@ Note: This method does not set the "length" property of partially applied functi
 
 **_.partialRight(func, [partials])**
 
-
 This method is like _.partial except that partially applied arguments are appended to those provided to the new function.
 
 The _.partialRight.placeholder value, which defaults to _ in monolithic builds, may be used as a placeholder for partially applied arguments.
@@ -464,13 +488,11 @@ The _.partialRight.placeholder value, which defaults to _ in monolithic builds, 
 Note: This method does not set the "length" property of partially applied functions.
 
 #### Arguments
-
 * func (Function): The function to partially apply arguments to.
 
 * [partials] (…*): The arguments to be partially applied.
 
 #### Returns
-
 (Function): Returns the new partially applied function.
 
 #### Example
@@ -478,19 +500,18 @@ Note: This method does not set the "length" property of partially applied functi
 
 ```
 
+
 rearg
 **_.rearg(func, indexes)**
 
 调用func返回一个函数，根据其中第一个索引处的参数值是作为第一个参数指定的索引排列参数，第二个索引处的参数值是作为第二个参数，依此类推。
 
 #### Arguments
-
 * func (Function): 重新排列参数的函数.
 
 * indexes (…(number|number[]): 重新排列参数的索引，可以使单独的索引或者由索引构成的数组。
 
 #### Returns
-
 (Function): 返回新的函数.
 
 #### Example
@@ -499,76 +520,59 @@ rearg
                 return [a, b, c];
             }, 2, 0, 1);
             console.log(rearged('a', 'c', 'b'));
-//[ 'b', 'a', 'c' ]
+//[ 'b', 'a', 'c' ] 根据给定索引[2,0,1]，排在索引2处的'b'放在重新排列的第一个，排在索引0处的'a'放在重新排列的第二个，排在索引1处的'a'防在重新排列的第三个。
 ```
 
 ## restParam
-
 **_.restParam(func, [start=func.length-1])**
 
+返回一个函数，调用函数和函数绑定的参数。从开始以及后面提供的一个数组。
 
-Creates a function that invokes func with the this binding of the created function and arguments from start and beyond provided as an array.
-
-Note: This method is based on the rest parameter.
+Note: 这个方法以后面的参数卫基础。
 
 #### Arguments
+* func (Function): 应用剩下参数的函数.
 
-* func (Function): The function to apply a rest parameter to.
-
-* [start=func.length-1] (number): The start position of the rest parameter.
+* [start=func.length-1] (number): 剩下参数开始的地方.
 
 #### Returns
-
-(Function): Returns the new function.
+(Function): 返回新的函数.
 
 #### Example
 ```js
-
-
-
+var say = _.restParam(function(what, names) {
+    return what + ' ' + _.initial(names).join(', ') +
+(_.size(names) > 1 ? ', & ' : '') + _.last(names);
+});
+console.log(say('hello', 'fred', 'barney', 'pebbles'));
+//=>hello fred, barney, & pebbles
+//这里的start=1
 ```
 
+##spread
+**_.spread(func)**
 
+通过调用函数和函数绑定的参数返回一个函数，把原来的函数的参数传递给返回的函数里.
 
-_.spread(func)
-# Ⓢ Ⓝ
+Note: 这个方法基于传播算子.
 
-Creates a function that invokes func with the this binding of the created function and an array of arguments much like Function#apply.
+####Arguments
+* func (Function): 传递参数的函数.
 
-Note: This method is based on the spread operator.
+#### Returns
 
-Arguments
-func (Function): The function to spread arguments over.
-Returns
-(Function): Returns the new function.
+(Function):返回新的函数.
 
-Example
-
-
-
-_.throttle(func, [wait=0], [options])
-# Ⓢ Ⓝ
-
-Creates a throttled function that only invokes func at most once per every wait milliseconds. The throttled function comes with a cancel method to cancel delayed invocations. Provide an options object to indicate that func should be invoked on the leading and/or trailing edge of the wait timeout. Subsequent calls to the throttled function return the result of the last func call.
-
-Note: If leading and trailing options are true, func is invoked on the trailing edge of the timeout only if the the throttled function is invoked more than once during the wait timeout.
-
-See David Corbacho’s article for details over the differences between _.throttle and _.debounce.
-
-Arguments
-func (Function): The function to throttle.
-[wait=0] (number): The number of milliseconds to throttle invocations to.
-[options] (Object): The options object.
-[options.leading=true] (boolean): Specify invoking on the leading edge of the timeout.
-[options.trailing=true] (boolean): Specify invoking on the trailing edge of the timeout.
-Returns
-(Function): Returns the new throttled function.
-
-Example
-
+#### Example
+```js
+var say = _.spread(function(who, what) {
+    return who + ' says ' + what;
+});
+console.log(say(['hello', 'fred']));
+//=>hello says fred
+```
 
 ## wrap
-
 **_.wrap(value, wrapper)**
 
 创建一个功能，可提供价值的包装函数作为第一个参数。提供给函数的任何额外的参数附加到那些提供给包装函数。该包装被调用的功能创建的这一具有约束力。
