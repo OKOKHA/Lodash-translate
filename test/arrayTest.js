@@ -4,7 +4,7 @@
 
   _ = require('lodash');
 
-  expect = require('chai'.expect);
+  expect = require('chai').expect;
 
 }).call(this);
 

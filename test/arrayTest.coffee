@@ -4,7 +4,7 @@
 #
 #describe('Array  Mode', function () {
 #describe('chunk', function () {
-#it('¸ù¾Ý²ÎÊýÇÐ¸îÊý×é', function () {
+#it('ï¿½ï¿½Ý²ï¿½ï¿½ï¿½ï¿½Ð¸ï¿½ï¿½ï¿½ï¿½ï¿½', function () {
 #  var list = [1, 2, 3, 4, 5, 6, 7]
 #  var result = _.chunk(list, 2)
 #  console.log(result);
@@ -12,5 +12,5 @@
 #})
 #})
 _=require 'lodash'
-expect = require 'chai' expect
+expect = require('chai').expect
 
