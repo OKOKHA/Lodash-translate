@@ -588,4 +588,6 @@ console.log(say(['hello', 'fred']));
 (Function): 返回新的函数.
 
 #### Example
+```js
 
+```
