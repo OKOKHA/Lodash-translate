@@ -34,7 +34,7 @@ describe('function  Mode', function () {
             var view = {
                 'user': 'senina',
                 'age':18
-                }
+            }
             _.bindAll(view);
             console.log(_.bindAll(view));
         })
