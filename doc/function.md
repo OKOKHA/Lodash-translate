@@ -693,3 +693,4 @@ _.throttle = function(func, wait, options) {
 #### Returns
 
 (Function): 返回新的函数.
+
