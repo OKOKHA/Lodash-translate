@@ -167,6 +167,30 @@ describe('function  Mode', function () {
             console.log(initialize(2));
         })
     })
+
+    describe('partial', function () {
+        it('', function () {
+            var greet = function(greeting, name) {
+                return greeting + ' ' + name;
+            };
+            var say =  _.partial(greet, _, 'fred');
+            var re = say('hi');
+            console.log(re);
+            expect(re.length).to.equal(7);
+        })
+    })
+    describe('partialRight', function () {
+        it('', function () {
+            var greet = function(greeting, name) {
+                return greeting + ' ' + name;
+            };
+            var say = _.partialRight(greet, 'fred' ,_);
+            var re = say('hi');
+            console.log(re);
+            expect(re.length).to.equal(7);
+        })
+    })
+
     describe('rearg', function () {
         it('', function () {
             var rearged = _.rearg(function(a, b, c) {

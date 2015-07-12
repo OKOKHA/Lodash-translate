@@ -246,14 +246,74 @@ curried(1)(2, _)(3);;//有占位符排在前面
 ```
 
 
-##delay
+## debounce
 
+**_.debounce(func, [wait=0], [options])**
+
+空闲控制。返回一个函数，每当调用func时必须要等待大于或等于wait时才能调用。这个函数有一个取消方法，如果取消调用func就要重新等待time=wait再重新调用func。当等待超时时还有一个对象选项。
+
+Note: 如果设定为immediate===true，因为开始边界已经调用过了此处无需调用。
+
+See David Corbacho’s article for details over the differences between _.debounce and _.throttle.
+
+#### Arguments
+* func (Function): 空闲之后要调用的函数.
+
+* [wait=0] (number): 要延时的毫秒数.
+
+* [options] (Object): 对象的选项.
+
+* [options.leading=false] (boolean): 指定调用超时的前界.
+
+* [options.maxWait] (number): 最大允许延时的时间.
+
+* [options.trailing=true] (boolean): 指定调用超时的后界.
+
+#### Returns
+(Function): 返回空闲控制的函数.
+```js
+  _.debounce = function(func, wait, immediate) {
+  var timeout, args, context, timestamp, result;
+
+  var later = function() {
+    // 据上一次触发时间间隔
+    var last = _.now() - timestamp;
+
+    // 上次被包装函数被调用时间间隔last小于设定时间间隔wait
+    if (last < wait && last > 0) {
+      timeout = setTimeout(later, wait - last);
+    } else {
+      timeout = null;
+      // 如果设定为immediate===true，因为开始边界已经调用过了此处无需调用
+      if (!immediate) {
+        result = func.apply(context, args);
+        if (!timeout) context = args = null;
+      }
+    }
+  };
+
+  return function() {
+    context = this;
+    args = arguments;
+    timestamp = _.now();
+    var callNow = immediate && !timeout;
+    // 如果延时不存在，重新设定延时
+    if (!timeout) timeout = setTimeout(later, wait);
+    if (callNow) {
+      result = func.apply(context, args);
+      context = args = null;
+    }
+
+    return result;
+  };
+};
+```
+##delay
 **_.delay(func, wait, [args])**
 
 等待数毫秒之后再调用函数。任何额外的参数被调用时都提供给函数。
 
 ####Arguments
-
 * func (Function): 要延迟的函数.
 
 * wait (number): 要延迟调用的时间毫秒数.
@@ -261,7 +321,6 @@ curried(1)(2, _)(3);;//有占位符排在前面
 * [args] (…*): 调用函数的参数.
 
 ####Returns
-
 (number): 返回计时器id.
 
 ####Example
@@ -273,7 +332,6 @@ _.delay(function(text) {
 ```
 
 ##flow
-
 **_.flow([funcs])**
 
 创建一个函数返回调用与所创建的功能，其中，每个连续的调用得到的返回值都提供给下一个调用的函数，返回的是最终的结果。
@@ -298,7 +356,6 @@ _.delay(function(text) {
 ```
 
 ##flowRight
-
 **_.flowRight([funcs])**
 
 这个方法和_.flow一样，除了从给定的函数中，它是从右边的函数开始调用的。
@@ -436,7 +493,7 @@ _
 
 **_.partial(func, [partials])**
 
-返回一个函数调用FUNC与前置到那些提供给新的功能的部分参数。这种方法类似于_.bind但它不会改变此绑定。
+创建一个函数调用函数与前置到那些提供给新的功能的部分参数。这种方法类似于_.bind但它不会改变此绑定。
 
 该_.partial.placeholder值，默认为_在整体构建，可以用作部分应用的参数中的一个占位符。
 
@@ -452,56 +509,44 @@ Note: 这个方法不设置部分应用函数的length属性值.
 
 ####Example
 ```js
-
-
-```
-
-_.partialRight(func, [partials])
-# Ⓢ Ⓝ
-
-This method is like _.partial except that partially applied arguments are appended to those provided to the new function.
-
-The _.partialRight.placeholder value, which defaults to _ in monolithic builds, may be used as a placeholder for partially applied arguments.
-
-Note: This method does not set the "length" property of partially applied functions.
-
-Arguments
-func (Function): The function to partially apply arguments to.
-[partials] (…*): The arguments to be partially applied.
-Returns
-(Function): Returns the new partially applied function.
-
-Example
-```js
-
-
+var greet = function(greeting, name) {
+    return greeting + ' ' + name;
+};
+var say = _.partialRight(greet, 'fred' ,_);
+var re = say('hi');
+//=>hi fred
 ```
 
 ## partialRight
 
 **_.partialRight(func, [partials])**
 
-This method is like _.partial except that partially applied arguments are appended to those provided to the new function.
+这个和_.patital一样除了部分应用的参数被附加给定到新函数.
 
-The _.partialRight.placeholder value, which defaults to _ in monolithic builds, may be used as a placeholder for partially applied arguments.
+该_.partial.placeholder值，默认为_在整体构建，可以用作部分应用的参数中的一个占位符。
 
-Note: This method does not set the "length" property of partially applied functions.
+Note: 这个方法不设置部分应用函数的length属性值.
 
-#### Arguments
-* func (Function): The function to partially apply arguments to.
+####Arguments
 
-* [partials] (…*): The arguments to be partially applied.
+* func (Function): 部分应用参数的函数。
 
-#### Returns
-(Function): Returns the new partially applied function.
+* [partials] (…*): 部分应用的参数。
+
+####Returns
+(Function): 返回新的部分应用的函数.
 
 #### Example
 ```js
-
+var greet = function(greeting, name) {
+    return greeting + ' ' + name;
+};
+var say = _.partialRight(greet, 'fred' ,_);
+var re = say('hi');
+//=>fred hi
 ```
 
-
-rearg
+##rearg
 **_.rearg(func, indexes)**
 
 调用func返回一个函数，根据其中第一个索引处的参数值是作为第一个参数指定的索引排列参数，第二个索引处的参数值是作为第二个参数，依此类推。
@@ -572,6 +617,68 @@ console.log(say(['hello', 'fred']));
 //=>hello says fred
 ```
 
+## throttle
+#### _.throttle(func, [wait=0], [options])
+
+返回一个函数，每等待wait毫秒数时调用一次func。这个函数也有一个取消方法，取消延时调用。函数还有一个超时的前界和后界。
+
+Note: 如果前界和后界都是true，等待超时调用函数的后界，仅当在超时时函数被多次调用。
+
+See David Corbacho’s article for details over the differences between _.throttle and _.debounce.
+
+#### Arguments
+* func (Function): 要频率控制的函数.
+
+* [wait=0] (number): 调用函数要等待的时间单位毫秒.
+
+* [options] (Object): 对象的选项.
+
+* [options.leading=false] (boolean): 指定调用超时的前界.
+
+* [options.trailing=true] (boolean): 指定调用超时的后界.
+
+#### Returns
+(Function): 返回频率控制的函数.
+```js
+_.throttle = function(func, wait, options) {
+  var context, args, result;
+  var timeout = null;
+  // 上次执行时间点
+  var previous = 0;
+  if (!options) options = {};
+  // 延迟执行函数
+  var later = function() {
+    // 若设定了开始边界不执行选项，上次执行时间始终为0
+    previous = options.leading === false ? 0 : _.now();
+    timeout = null;
+    result = func.apply(context, args);
+    if (!timeout) context = args = null;
+  };
+  return function() {
+    var now = _.now();
+    // 首次执行时，如果设定了开始边界不执行选项，将上次执行时间设定为当前时间。
+    if (!previous && options.leading === false) previous = now;
+    // 延迟执行时间间隔
+    var remaining = wait - (now - previous);
+    context = this;
+    args = arguments;
+    // 延迟时间间隔remaining小于等于0，表示上次执行至此所间隔时间已经超过一个时间窗口
+    // remaining大于时间窗口wait，表示客户端系统时间被调整过
+    if (remaining <= 0 || remaining > wait) {
+      clearTimeout(timeout);
+      timeout = null;
+      previous = now;
+      result = func.apply(context, args);
+      if (!timeout) context = args = null;
+    //如果延迟执行不存在，且没有设定结尾边界不执行选项
+    } else if (!timeout && options.trailing !== false) {
+      timeout = setTimeout(later, remaining);
+    }
+    return result;
+  };
+};
+```
+
 ## wrap
 **_.wrap(value, wrapper)**
 
@@ -586,8 +693,3 @@ console.log(say(['hello', 'fred']));
 #### Returns
 
 (Function): 返回新的函数.
-
-#### Example
-```js
-
-```
