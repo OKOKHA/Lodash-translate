@@ -217,3 +217,5 @@ describe('function  Mode', function () {
         })
     })
 })
+
+
