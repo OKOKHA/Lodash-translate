@@ -141,7 +141,7 @@ describe('string  Mode', function () {
             expect(re.length).to.equal(10);
         })
     })
-    describe.only('words', function () {
+    describe('words', function () {
         it('', function () {
             var re =_.words('zhi,&, ,%,zheng');
             console.log(re);

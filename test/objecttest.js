@@ -268,7 +268,7 @@ describe('object  Mode', function () {
             var re2 = _.result(object, 'a.b.c', 'default');expect(re2).to.equal('default');
         })
     })
-    describe.only('transform',function(){
+    describe('transform',function(){
         it('', function(){
             var re = _.transform({ 'a': 1, 'b': 2 }, function(result, n, key) {
                 result[key] = n * 3;

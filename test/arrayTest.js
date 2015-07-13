@@ -6,6 +6,18 @@
 
   expect = require('chai').expect;
 
+  describe('array', function() {
+    return describe('chunk', function() {
+      return it('根据参数切割数组', function() {
+        var list, result;
+        list = [1, 2, 3, 4, 5, 6, 7];
+        result = _.chunk(list, 2);
+        console.log(result);
+        return expect(result.length).to.equal(4);
+      });
+    });
+  });
+
 }).call(this);
 
 //# sourceMappingURL=arrayTest.js.map
